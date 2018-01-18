@@ -14,6 +14,11 @@ const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
 const loadMinified = require('./load-minified')
 
+// sass
+const extractSass = new ExtractTextPlugin({
+  filename: '[name].[contenthash].css'
+})
+
 const env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
   : config.build.env
@@ -23,7 +28,19 @@ const webpackConfig = merge(baseWebpackConfig, {
     rules: utils.styleLoaders({
       sourceMap: config.build.productionSourceMap,
       extract: true
-    })
+    }),
+    rules: [{
+      test: /\.scss$/,
+      use: extractSass.extract({
+        use: [{
+          loader: 'css-loader'
+        }, {
+          loader: 'sass-loader'
+        }],
+        // use style-loader in dev
+        fallback: 'style-loader'
+      })
+    }]
   },
   devtool: config.build.productionSourceMap ? '#source-map' : false,
   output: {
@@ -32,6 +49,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
   },
   plugins: [
+    extractSass,
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
       'process.env': env

@@ -1,26 +1,27 @@
 <template>
-    <div id="app" class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-        <header class="mdl-layout__header">
-            <div class="mdl-layout__header-row">
-                <span class="mdl-layout-title">Yop</span>
-                <div class="mdl-layout-spacer"></div>
-                <nav class="mdl-navigation" v-if="is_session()">
-                    <a class="mdl-navigation__link" href="javascript:;" v-on:click="doSignout">Sign Out</a>
+    <div id="app">
+        <header>
+            <div class="navbar-fixed">
+                <nav class="cyan">
+                    <div class="nav-wrapper">
+                        <a href="/" class="brand-logo">Yop</a>
+                        <a href="javascript:;" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                        <ul class="right hide-on-med-and-down">
+                            <li><router-link to="/home">Home</router-link></li>
+                            <li><router-link to="/post">Post a Picture</router-link></li>
+                            <li v-if="isSession()"><a @click="doSignout">Sign Out</a></li>
+                        </ul>
+                    </div>
+                    <!-- drawer on mobile -->
+                    <ul class="sidenav" id="mobile-demo">
+                        <li><router-link to="/home" class="sidenav-close">Home</router-link></li>
+                        <li><router-link to="/post" class="sidenav-close">Post a Picture</router-link></li>
+                        <li v-if="isSession()"><a @click="doSignout" class="sidenav-close">Sign Out</a></li>
+                    </ul>
                 </nav>
             </div>
         </header>
-        <div class="mdl-layout__drawer">
-            <span class="mdl-layout-title">Menu</span>
-            <nav class="mdl-navigation">
-                <router-link class="mdl-navigation__link" to="/home" @click.native="hideMenu">Home</router-link>
-                <router-link class="mdl-navigation__link" to="/post" @click.native="hideMenu">Post a picture</router-link>
-            </nav>
-        </div>
-        <div class="mdl-layout__drawer-button"
-            role="button" aria-expanded="false">
-            <i class="material-icons">menu</i>
-        </div>
-        <main class="mdl-layout__content">
+        <main>
             <div class="page-content">
                 <router-view></router-view>
             </div>
@@ -30,35 +31,44 @@
 
 <script>
     import firebase from './service/firebase'
-    // import componentHandler from 'material-design-lite/material.min.js'
-    require('material-design-lite')
+    import './assets/materialize/materialize.scss'
+    import './assets/styles/yop.scss'
+    import M from './../static/js/materialize.min.js'
+    // require('material-design-lite')
     export default {
         name: 'app',
         methods: {
-            hideMenu: function () {
-                document.getElementsByClassName('mdl-layout__drawer')[0].classList.remove('is-visible')
-                document.getElementsByClassName('mdl-layout__obfuscator')[0].classList.remove('is-visible')
-            },
             doSignout: function () {
                 firebase.auth.signOut().then(() => {
                     this.$router.push('/')
                 })
             },
-            is_session: function () {
+            isSession: function () {
                 return firebase.auth.currentUser
             }
-            // interval: function () {
-            //     console.log('interval')
-            //     componentHandler.upgradeDom()
-            // }
         },
         mounted: function () {
-            // this.interval()
-            // componentHandler.upgradeAllRegisteredElements()
+            // drawer action
+            let sideNav = document.querySelector('.sidenav')
+            let sideNavInstance = new M.Sidenav(sideNav)
         }
     }
 </script>
 <style>
     @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
-    @import url('https://code.getmdl.io/1.2.1/material.blue-red.min.css');
+    /* @import url('https://code.getmdl.io/1.2.1/material.blue-red.min.css'); */
+
+    body {
+        background-color: #fafafa;
+        overflow: hidden;
+    }
+    .sidenav {
+        width: 250px;
+        padding-top: 20px;
+    }
+    @media screen and (min-width: 992px){
+        .brand-logo {
+            margin-left: 15px;
+        }
+    }
 </style>

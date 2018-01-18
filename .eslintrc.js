@@ -26,6 +26,9 @@ module.exports = {
     // disable indent errror
     'indent': 0,
     // dusable no new side effect warning
-    'no-new': 0
+    'no-new': 0,
+    // disable undefined variable and unused
+    'no-unused-vars': 0,
+    'no-undef': 0
   }
 }
