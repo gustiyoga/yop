@@ -1,0 +1,25 @@
+// ellipsis text
+.text-ellipsis {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}
+.text-ellipsis--1 {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.text-ellipsis--2 {
+    -webkit-line-clamp: 2;
+}
+.text-ellipsis--3 {
+    -webkit-line-clamp: 3;
+}
+.text-ellipsis--4 {
+    -webkit-line-clamp: 4;
+}
+.text-ellipsis--5 {
+    -webkit-line-clamp: 5;
+}
+
+// weight

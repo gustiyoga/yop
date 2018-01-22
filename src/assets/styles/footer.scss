@@ -1,0 +1,34 @@
+.footer-menu {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 99;
+    height: 50px;
+    padding: 0 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    // box-shadow: 0 -2px 2px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 -2px 2px 0 rgba(0, 0, 0, 0.14),
+                0 -3px 1px -2px rgba(0, 0, 0, 0.12),
+                0 -1px 5px 0 rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+
+    a {
+        color: #000000;
+        &.router-link-exact-active {
+            color: $secondary-color;
+        }
+    }
+}
+.footer-menu__item {
+    color: color("white", "base");
+    padding: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.footer-menu--stabilizer {
+    height: 50px;
+}

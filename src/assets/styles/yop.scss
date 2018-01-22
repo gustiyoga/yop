@@ -1,1 +1,34 @@
+body {
+    background-color: #fafafa;
+}
+
+// modifier
+@media screen and (min-width: 992px){
+    .brand-logo {
+        margin-left: 15px;
+    }
+}
+input[type=email]:not(.browser-default).validate + label {
+    width: auto;
+}
+
+// custom
+// margin
+.mt--1 {
+    margin-top: 10px;
+}
+.mt--2 {
+    margin-top: 20px;
+}
+
+// cursor
+.cursor--pointer {
+    cursor: pointer;
+}
+
 @import 'color';
+@import 'button';
+@import 'typograf';
+@import 'navbar';
+@import 'sidenav';
+@import 'footer';

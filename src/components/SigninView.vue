@@ -33,8 +33,8 @@
             <div class="mdl-cell mdl-cell--2-col-tablet"></div>
             <div class="mdl-cell mdl-cell--8-col-tablet">
                 <div class="title">
-                    <span>Forgot your password? You can <a href="javascript:;"><router-link to="/reset-password">reset here</router-link></a>. </span>
-                    <span>Or don't have an account? You can <a href="javascript:;"><router-link to="/signup">create one</router-link></a>. </span>
+                    <span>Forgot your password? You can <router-link :to="{path: '/reset-password'}">reset here</router-link>. </span>
+                    <span>Or don't have an account? You can <router-link :to="{path: '/signup'}">create one</router-link>. </span>
                 </div>
                 <!-- <br><br>
                 <center>
@@ -47,56 +47,67 @@
     </div>
 </template>
 <script>
-import firebase from '../service/firebase'
-export default {
-    name: 'signin',
-    data: function () {
-        return {
-            'email': '',
-            'password': ''
-        }
-    },
-    methods: {
-        toggleLoadingBar: function (stat) {
-            if (stat) {
-                document.getElementById('loading-bar').style.display = 'block'
-            } else {
-                document.getElementById('loading-bar').style.display = 'none'
+    import firebase from '../service/firebase'
+    import M from './../../static/js/materialize.min.js'
+    export default {
+        name: 'signin',
+        data: function () {
+            return {
+                email: '',
+                password: ''
             }
         },
-        doSignin: function () {
-            if (this.email !== '' && this.password !== '') {
-                this.toggleLoadingBar(true)
+        methods: {
+            toggleLoadingBar: function (stat) {
+                if (stat) {
+                    document.getElementById('loading-bar').style.display = 'block'
+                } else {
+                    document.getElementById('loading-bar').style.display = 'none'
+                }
+            },
+            doSignin: function () {
+                if (this.email !== '' && this.password !== '') {
+                    this.toggleLoadingBar(true)
 
-                firebase.auth.signInWithEmailAndPassword(this.email, this.password).then(
-                    (user) => {
-                        if (!user.emailVerified) {
-                            alert('You need to verify your account first!')
-                            firebase.auth.signOut().then(() => {})
-                        } else {
-                            // alert(JSON.stringify(user))
-                            // alert('Well done! You are now connected!')
+                    firebase.auth.signInWithEmailAndPassword(this.email, this.password).then(
+                        (user) => {
+                            if (!user.emailVerified) {
+                                M.toast({
+                                    html: 'You need to verify your account first!',
+                                    displayLength: 5000
+                                })
+                                firebase.auth.signOut().then(() => {})
+                            } else {
+                                M.toast({
+                                    html: 'Well done! You are now connected!',
+                                    displayLength: 5000
+                                })
+                                this.$router.push('/home')
+                            }
 
-                            this.$router.push('/home')
+                            this.toggleLoadingBar(false)
+                        },
+                        (err) => {
+                            M.toast({
+                                html: 'Opps. ' + err.message,
+                                displayLength: 5000
+                            })
+                            this.toggleLoadingBar(false)
                         }
-
-                        this.toggleLoadingBar(false)
-                    },
-                    (err) => {
-                        alert('Opps. ' + err.message)
-                        this.toggleLoadingBar(false)
-                    }
-                )
-            } else {
-                alert('Please fill form!')
-                this.toggleLoadingBar(false)
+                    )
+                } else {
+                    M.toast({
+                        html: 'Please fill form!',
+                        displayLength: 5000
+                    })
+                    this.toggleLoadingBar(false)
+                }
+            },
+            checkAuth: function () {
+                alert(JSON.stringify(firebase.auth.currentUser))
             }
-        },
-        checkAuth: function () {
-            alert(JSON.stringify(firebase.auth.currentUser))
         }
     }
-}
 </script>
 <style scoped>
     .btn-action {

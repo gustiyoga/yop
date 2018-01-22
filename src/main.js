@@ -8,7 +8,7 @@ import firebase from './service/firebase'
 Vue.config.productionTip = false
 
 const unsubscribe = firebase.auth.onAuthStateChanged(() => {
-    new Vue({
+    const app = new Vue({
       el: '#app',
       firebase: {
           cat: firebase.database.ref('cat').orderByChild('created_at')

@@ -12,7 +12,7 @@ import PostView from '@/components/PostView'
 
 Vue.use(Router, Vuefire)
 
-let router = new Router({
+const router = new Router({
     mode: 'history',
     routes: [
         {
@@ -58,7 +58,15 @@ let router = new Router({
                 requiresAuth: true
             }
         }
-    ]
+    ],
+    // scroll to top if go to new page
+    scrollBehavior (to, from, savedPosition) {
+        if (savedPosition) {
+            return savedPosition
+        } else {
+            return { x: 0, y: 0 }
+        }
+    }
 })
 
 router.beforeEach((to, from, next) => {
@@ -67,10 +75,8 @@ router.beforeEach((to, from, next) => {
 
     // if not signin
     if (requiresAuth && !currentUser) {
-        // console.log('go to signin')
         next('signin')
     } else if (!requiresAuth && currentUser) {
-        // console.log('go to Home')
         next('home')
     } else {
         next()

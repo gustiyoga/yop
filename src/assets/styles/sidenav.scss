@@ -1,0 +1,23 @@
+// modifier
+.sidenav li > a {
+    padding: 0 20px;
+}
+
+.sidenav-profil {
+    width: 100%;
+    height: 150px;
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    padding: 20px 0 0 20px;
+    img {
+        object-fit: cover;
+        width: 60px;
+        height: 60px;
+    }
+}
+.sidenav-profil__name {
+    font-size: 1.2rem;
+}
+.sidenav-profil__email {
+    margin-top: -3px;
+    font-size: 1rem;
+}

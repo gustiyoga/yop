@@ -1,0 +1,11 @@
+// modifier
+@media screen and (min-width: 992px){
+    .fixed-action-btn {
+        margin-bottom: 0;
+    }
+}
+@media screen and (max-width: 991px){
+    .fixed-action-btn {
+        margin-bottom: 50px;
+    }
+}

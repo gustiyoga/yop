@@ -137,15 +137,7 @@ const webpackConfig = merge(baseWebpackConfig, {
               handler: 'cacheFirst'
           },
           {
-              urlPattern: /^https:\/\/code\.getmdl\.io\//,
-              handler: 'cacheFirst'
-          },
-          {
               urlPattern: /^https:\/\/fonts\.gstatic\.com\//,
-              handler: 'cacheFirst'
-          },
-          {
-              urlPattern: /^https:\/\/fonts\.getmdl\.com\//,
               handler: 'cacheFirst'
           },
           {

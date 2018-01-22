@@ -38,63 +38,82 @@
             <div class="mdl-cell mdl-cell--2-col-tablet"></div>
             <div class="mdl-cell mdl-cell--8-col-tablet">
                 <div class="title">
-                    <span>Already have an account? You can signin <a href="javascript:;"><router-link to="/">here</router-link></a>. </span>
+                    <span>Already have an account? You can signin <a href="javascript:;"><router-link :to="{path: '/signin'}">here</router-link></a>. </span>
                 </div>
             </div>
         </div>
     </div>
 </template>
 <script>
-import firebase from '../service/firebase'
-export default {
-    name: 'signup',
-    data: function () {
-        return {
-            email: '',
-            password: '',
-            repassword: ''
-        }
-    },
-    methods: {
-        toggleLoadingBar: function (stat) {
-            if (stat) {
-                document.getElementById('loading-bar').style.display = 'block'
-            } else {
-                document.getElementById('loading-bar').style.display = 'none'
+    import firebase from '../service/firebase'
+    import M from './../../static/js/materialize.min.js'
+    export default {
+        name: 'signup',
+        data: function () {
+            return {
+                email: '',
+                password: '',
+                repassword: ''
             }
         },
-        doSignup: function () {
-            if (this.password !== this.repassword) {
-                alert('Password does not match!')
-            } else if (this.email !== '' && this.password !== '') {
-                this.toggleLoadingBar(true)
+        methods: {
+            toggleLoadingBar: function (stat) {
+                if (stat) {
+                    document.getElementById('loading-bar').style.display = 'block'
+                } else {
+                    document.getElementById('loading-bar').style.display = 'none'
+                }
+            },
+            doSignup: function () {
+                if (this.password !== this.repassword) {
+                    M.toast({
+                        html: 'Password does not match',
+                        displayLength: 5000
+                    })
+                } else if (this.email !== '' && this.password !== '') {
+                    this.toggleLoadingBar(true)
 
-                firebase.auth.createUserWithEmailAndPassword(this.email, this.password).then(
-                    (user) => {
-                        // alert('Your account has been created!')
-                        alert(JSON.stringify(user))
-                        firebase.auth.currentUser.sendEmailVerification().then(
-                            (msg) => {
-                                alert('Email verification has been sent, please check your email')
-                                this.toggleLoadingBar(false)
-                            },
-                            (err) => {
-                                alert('Failed to send email verification, ' + err)
-                                this.toggleLoadingBar(false)
-                            }
-                        )
-                    },
-                    (err) => {
-                        alert('Opps. ' + err.message)
-                        this.toggleLoadingBar(false)
-                    }
-                )
-            } else {
-                alert('Please fill form!')
+                    firebase.auth.createUserWithEmailAndPassword(this.email, this.password).then(
+                        (user) => {
+                            M.toast({
+                                html: 'Your account has been created!',
+                                displayLength: 5000
+                            })
+                            // alert(JSON.stringify(user))
+                            firebase.auth.currentUser.sendEmailVerification().then(
+                                (msg) => {
+                                    M.toast({
+                                        html: 'Email verification has been sent, please check your email!',
+                                        displayLength: 5000
+                                    })
+                                    this.toggleLoadingBar(false)
+                                },
+                                (err) => {
+                                    M.toast({
+                                        html: 'Failed to send email verification, ' + err.message,
+                                        displayLength: 5000
+                                    })
+                                    this.toggleLoadingBar(false)
+                                }
+                            )
+                        },
+                        (err) => {
+                            M.toast({
+                                html: 'Opps. ' + err.message,
+                                displayLength: 5000
+                            })
+                            this.toggleLoadingBar(false)
+                        }
+                    )
+                } else {
+                    M.toast({
+                        html: 'Please fill form!',
+                        displayLength: 5000
+                    })
+                }
             }
         }
     }
-}
 </script>
 <style scoped>    
     .btn-action {
