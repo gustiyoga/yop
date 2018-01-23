@@ -1,7 +1,7 @@
 <template>
     <div>
         <router-link :to="{path: link}" active-class>
-            <div class="footer-menu__item waves-effect waves-circle waves-orange">
+            <div class="footer-nav__item waves-effect waves-circle waves-orange">
                 <i class="material-icons">{{ icon }}</i>
             </div>
         </router-link>

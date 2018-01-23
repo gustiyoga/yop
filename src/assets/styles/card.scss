@@ -1,0 +1,25 @@
+// modifier
+.card--mod {
+    margin: 0.5rem 0 0.5rem 0 !important;
+}
+// .card-content--mod {
+//     padding: 10px 15px !important;
+// }
+// .card-title--mod {
+//     font-size: 1.2rem !important;
+//     display: flex !important;
+//     align-items: center;
+//     justify-content: space-between;
+//     min-height: 44px !important;
+//     line-height: 22px !important;
+//     margin-bottom: 0 !important;
+// }
+.card-image--mod {
+    height: 150px;
+}
+.card-title--mod-on-image {
+    font-size: 1.2rem !important;
+    width: 100%;
+    padding: 12px !important;
+    background: linear-gradient(0deg, rgba(0,0,0,1), rgba(0,0,0,0));
+}

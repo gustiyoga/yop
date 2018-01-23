@@ -5,7 +5,7 @@
                 <h1 class="cyan-text">Reset Password</h1>
             </center>
         </div>
-        <div class="col s12 l6 offset-l3">
+        <div class="col s12 m6 offset-m3 l4 offset-l4">
             <div class="card card--auth-form">
                 <div id="loading-bar" class="progress">
                     <div class="indeterminate cyan"></div>
@@ -24,7 +24,7 @@
                 </div>
             </div>
         </div>
-        <div class="col s12 l6 offset-l3">
+        <div class="col s12 m6 offset-m3 l4 offset-l4">
             <div class="mdl-cell mdl-cell--2-col-tablet"></div>
             <div class="mdl-cell mdl-cell--8-col-tablet">
                 <div class="title">
@@ -52,32 +52,29 @@
                     document.getElementById('loading-bar').style.display = 'none'
                 }
             },
+            showToasT: function (string) {
+                M.toast({
+                    html: string,
+                    displayLength: 5000
+                })
+            },
             doResetPassword: function () {
                 if (this.email !== '') {
                     this.toggleLoadingBar(true)
 
                     firebase.auth.sendPasswordResetEmail(this.email).then(
                         (msg) => {
-                            M.toast({
-                                html: 'Reset link has been sent to your email address, please check your inbox!',
-                                displayLength: 5000
-                            })
+                            this.showToasT('Reset link has been sent to your email address, please check your inbox!')
                             // console.log(JSON.stringify(msg))
                             this.toggleLoadingBar(false)
                         },
                         (err) => {
-                            M.toast({
-                                html: 'Opps. ' + err.message,
-                                displayLength: 5000
-                            })
+                            this.showToasT('Opps. ' + err.message)
                             this.toggleLoadingBar(false)
                         }
                     )
                 } else {
-                    M.toast({
-                        html: 'Please fill form!',
-                        displayLength: 5000
-                    })
+                    this.showToasT('Please fill form!')
                 }
             }
         }

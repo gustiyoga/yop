@@ -5,7 +5,7 @@
                 <h1 class="cyan-text">Sign In</h1>
             </center>
         </div>
-        <div class="col s12 l6 offset-l3">
+        <div class="col s12 m6 offset-m3 l4 offset-l4">
             <div class="card card--auth-form">
                 <div id="loading-bar" class="progress">
                     <div class="indeterminate cyan"></div>
@@ -29,7 +29,7 @@
                 </div>
             </div>
         </div>
-        <div class="col s12 l6 offset-l3">
+        <div class="col s12 m6 offset-m3 l4 offset-l4">
             <div class="mdl-cell mdl-cell--2-col-tablet"></div>
             <div class="mdl-cell mdl-cell--8-col-tablet">
                 <div class="title">
@@ -65,6 +65,12 @@
                     document.getElementById('loading-bar').style.display = 'none'
                 }
             },
+            showToast: function (string) {
+                M.toast({
+                    html: string,
+                    displayLength: 5000
+                })
+            },
             doSignin: function () {
                 if (this.email !== '' && this.password !== '') {
                     this.toggleLoadingBar(true)
@@ -72,34 +78,21 @@
                     firebase.auth.signInWithEmailAndPassword(this.email, this.password).then(
                         (user) => {
                             if (!user.emailVerified) {
-                                M.toast({
-                                    html: 'You need to verify your account first!',
-                                    displayLength: 5000
-                                })
+                                this.showToast('You need to verify your account first!')
                                 firebase.auth.signOut().then(() => {})
                             } else {
-                                M.toast({
-                                    html: 'Well done! You are now connected!',
-                                    displayLength: 5000
-                                })
+                                this.showToast('Well done! You are now connected!')
                                 this.$router.push('/home')
                             }
-
                             this.toggleLoadingBar(false)
                         },
                         (err) => {
-                            M.toast({
-                                html: 'Opps. ' + err.message,
-                                displayLength: 5000
-                            })
+                            this.showToast('Opps. ' + err.message)
                             this.toggleLoadingBar(false)
                         }
                     )
                 } else {
-                    M.toast({
-                        html: 'Please fill form!',
-                        displayLength: 5000
-                    })
+                    this.showToast('Please fill form!')
                     this.toggleLoadingBar(false)
                 }
             },

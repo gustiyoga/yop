@@ -1,4 +1,4 @@
-.footer-menu {
+.footer-nav {
     position: fixed;
     left: 0;
     bottom: 0;
@@ -22,13 +22,13 @@
         }
     }
 }
-.footer-menu__item {
+.footer-nav__item {
     color: color("white", "base");
     padding: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.footer-menu--stabilizer {
+.footer-nav--stabilizer {
     height: 50px;
 }

@@ -1,33 +1,51 @@
 <template>
-    <div class="row">
-        <div v-for="picture in this.pictures" class="col s12 m4 l3" :key="picture.id">
-            <div class="card mt--2">
-                <div class="card-image waves-effect waves-block waves-light" @click="displayDetails(picture.id)">
-                    <!-- <img src="http://next.materializecss.com/images/office.jpg"> -->
-                    <img :src="picture.url" :alt="picture.comment" style="object-fit:cover; height: 200px;">
+    <div>
+        <div class="row">
+            <div class="col s12 page-title cyan-text">
+                <h1>Your Boards</h1>
+            </div>
+            <!-- <div class="col s12 m4 offset-m4">
+                <div class="input-search">
+                    <input type="search">
                 </div>
-                <div class="card-content">
-                    <span class="card-title grey-text text-darken-4">
-                        <a class="cursor--pointer" @click="displayDetails(picture.id)">{{ picture.comment }}</a>
-                        <i class="material-icons right cursor--pointer card__dropdown-trigger orange-text" :data-target="'card__dropdown-'+picture.id">more_vert</i>
-                    </span>
-                    <!-- Dropdown Structure -->
-                    <ul :id="'card__dropdown-'+picture.id" class='dropdown-content'>
-                        <li><a href="javascript:;" class="cyan-text"><i class="material-icons">mode_edit</i> Edit</a></li>
-                        <li class="divider"></li>
-                        <li><a href="javascript:;" class="red-text"><i class="material-icons">delete</i>Delete</a></li>
-                    </ul>
-
-                    <p class="text-ellipsis text-ellipsis--3">
-                        I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.
-                    </p>
+            </div> -->
+        </div>
+        <div class="row">
+            <div v-for="picture in this.pictures" class="col s12 m6 l4 xl3" :key="picture.id">
+                <div class="card hoverable card--mod">
+                    <div class="card-image waves-effect waves-block waves-light" @click="displayDetails(picture.id)">
+                        <img class="card-image--mod image--object-fit" :src="picture.url" :alt="picture.comment">
+                        <div class="card-title card-title--mod-on-image">
+                            {{ picture.comment }}
+                        </div>
+                    </div>
+                    <!-- <div class="card-content card-content--mod">
+                        <span class="card-title grey-text text-darken-4 card-title--mod">
+                            <a class="cursor--pointer text-ellipsis text-ellipsis--2" @click="displayDetails(picture.id)" :title="picture.comment">{{ picture.comment }}</a>
+                            <!-- <i class="material-icons right cursor--pointer card__dropdown-trigger orange-text" :data-target="'card__dropdown-'+picture.id">more_vert</i> -//->
+                        </span>
+                        <!-- Dropdown Structure -//->
+                        <!-- <ul :id="'card__dropdown-'+picture.id" class='dropdown-content'>
+                            <li>
+                                <a href="javascript:;" class="cyan-text" @click="doEdit(picture.id)">
+                                    <i class="material-icons">mode_edit</i> Edit
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="javascript:;" class="red-text" @click="doDelete(picture.id)">
+                                    <i class="material-icons">delete</i>Delete
+                                </a>
+                            </li>
+                        </ul> -//->
+                    </div> -->
                 </div>
             </div>
-        </div>
-        <div class="fixed-action-btn">            
-            <router-link class="btn-floating btn-large waves-effect waves-light orange" to="/post">
-                <i class="material-icons">mode_edit</i>
-            </router-link>
+            <div class="fixed-action-btn"> 
+                <router-link class="btn-floating btn-large waves-effect waves-light orange" to="/post">
+                    <i class="material-icons">mode_edit</i>
+                </router-link>
+            </div>
         </div>
     </div>
 </template>
@@ -42,8 +60,20 @@
             }
         },
         methods: {
-            displayDetails (id) {
+            displayDetails: function (id) {
                 this.$router.push({name: 'detail', params: { id: id }})
+            },
+            showToast: function (string) {
+                M.toast({
+                    html: string,
+                    displayLength: 5000
+                })
+            },
+            doEdit: function (id) {
+                this.showToast('Edit ' + id)
+            },
+            doDelete: function (id) {
+                this.showToast('Delete ' + id)
             }
         },
         mounted: function () {

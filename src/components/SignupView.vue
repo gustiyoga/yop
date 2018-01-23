@@ -5,7 +5,7 @@
                 <h1 class="cyan-text">Sign Up</h1>
             </center>
         </div>
-        <div class="col s12 l6 offset-l3">
+        <div class="col s12 m6 offset-m3 l4 offset-l4">
             <div class="card card--auth-form">
                 <div id="loading-bar" class="progress">
                     <div class="indeterminate cyan"></div>
@@ -34,7 +34,7 @@
                 </div>
             </div>
         </div>
-        <div class="col s12 l6 offset-l3">
+        <div class="col s12 m6 offset-m3 l4 offset-l4">
             <div class="mdl-cell mdl-cell--2-col-tablet"></div>
             <div class="mdl-cell mdl-cell--8-col-tablet">
                 <div class="title">
@@ -64,52 +64,40 @@
                     document.getElementById('loading-bar').style.display = 'none'
                 }
             },
+            showToast: function (string) {
+                M.toast({
+                    html: string,
+                    displayLength: 5000
+                })
+            },
             doSignup: function () {
                 if (this.password !== this.repassword) {
-                    M.toast({
-                        html: 'Password does not match',
-                        displayLength: 5000
-                    })
+                    this.showToast('Password does not match')
                 } else if (this.email !== '' && this.password !== '') {
                     this.toggleLoadingBar(true)
 
                     firebase.auth.createUserWithEmailAndPassword(this.email, this.password).then(
                         (user) => {
-                            M.toast({
-                                html: 'Your account has been created!',
-                                displayLength: 5000
-                            })
+                            this.showToast('Your account has been created!')
                             // alert(JSON.stringify(user))
                             firebase.auth.currentUser.sendEmailVerification().then(
                                 (msg) => {
-                                    M.toast({
-                                        html: 'Email verification has been sent, please check your email!',
-                                        displayLength: 5000
-                                    })
+                                    this.showToast('Email verification has been sent, please check your email!')
                                     this.toggleLoadingBar(false)
                                 },
                                 (err) => {
-                                    M.toast({
-                                        html: 'Failed to send email verification, ' + err.message,
-                                        displayLength: 5000
-                                    })
+                                    this.showToast('Failed to send email verification, ' + err.message)
                                     this.toggleLoadingBar(false)
                                 }
                             )
                         },
                         (err) => {
-                            M.toast({
-                                html: 'Opps. ' + err.message,
-                                displayLength: 5000
-                            })
+                            this.showToast('Opps. ' + err.message)
                             this.toggleLoadingBar(false)
                         }
                     )
                 } else {
-                    M.toast({
-                        html: 'Please fill form!',
-                        displayLength: 5000
-                    })
+                    this.showToast('Please fill form!')
                 }
             }
         }
