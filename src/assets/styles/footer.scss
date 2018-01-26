@@ -16,14 +16,14 @@
     overflow: hidden;
 
     a {
-        color: #000000;
+        color: $primary-color;
         &.router-link-exact-active {
-            color: $secondary-color;
+            color: $secondary-color !important;
         }
     }
 }
 .footer-nav__item {
-    color: color("white", "base");
+    // color: $primary-color;
     padding: 50px;
     display: flex;
     justify-content: center;

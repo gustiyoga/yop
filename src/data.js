@@ -2,7 +2,8 @@ export default {
     pictures: [
         {
             'id': 0,
-            'url': 'https://picsum.photos/600/600?image=1067',
+            // 'url': 'https://picsum.photos/600/600?image=1067',
+            'color': 'blue',
             'comment': 'Aplikasi Kasir Berbasis Web',
             'info': 'Posted by Kevin on Friday'
         },

@@ -14,8 +14,9 @@
             <div v-for="picture in this.pictures" class="col s12 m6 l4 xl3" :key="picture.id">
                 <div class="card hoverable card--mod">
                     <div class="card-image waves-effect waves-block waves-light" @click="displayDetails(picture.id)">
-                        <img class="card-image--mod image--object-fit" :src="picture.url" :alt="picture.comment">
-                        <div class="card-title card-title--mod-on-image">
+                        <img v-if="picture.url" class="card-image--mod image--object-fit" :src="picture.url" :alt="picture.comment">
+                        <div v-if="!picture.url" :class="'card-color-background ' + (picture.color ? picture.color : 'blue')"></div>
+                        <div :class="'card-title card-title--mod text-ellipsis text-ellipsis--2 ' + ( picture.url ? 'card-title--mod-dark' : '')">
                             {{ picture.comment }}
                         </div>
                     </div>
@@ -43,7 +44,7 @@
             </div>
             <div class="fixed-action-btn"> 
                 <router-link class="btn-floating btn-large waves-effect waves-light orange" to="/post">
-                    <i class="material-icons">mode_edit</i>
+                    <i class="material-icons">edit</i>
                 </router-link>
             </div>
         </div>
@@ -62,19 +63,19 @@
         methods: {
             displayDetails: function (id) {
                 this.$router.push({name: 'detail', params: { id: id }})
-            },
-            showToast: function (string) {
-                M.toast({
-                    html: string,
-                    displayLength: 5000
-                })
-            },
-            doEdit: function (id) {
-                this.showToast('Edit ' + id)
-            },
-            doDelete: function (id) {
-                this.showToast('Delete ' + id)
             }
+            // showToast: function (string) {
+            //     M.toast({
+            //         html: string,
+            //         displayLength: 5000
+            //     })
+            // },
+            // doEdit: function (id) {
+            //     this.showToast('Edit ' + id)
+            // },
+            // doDelete: function (id) {
+            //     this.showToast('Delete ' + id)
+            // }
         },
         mounted: function () {
             // dropdown card menu

@@ -64,14 +64,16 @@
         </header>
         <main>
             <div class="page-content">
-                <router-view></router-view>
+                <transition name="fade">
+                    <router-view></router-view>
+                </transition>
                 <div v-if="isSession()" class="footer-nav--stabilizer hide-on-large-only"></div>
             </div>
         </main>
         <footer v-if="isSession()" class="footer-nav hide-on-large-only white">
             <footer-nav icon="home" link="/home"></footer-nav>
             <footer-nav icon="assignment" link="/post"></footer-nav>
-            <footer-nav icon="home" link="/home"></footer-nav>
+            <footer-nav icon="people" link="/people"></footer-nav>
         </footer>
     </div>
 </template>
@@ -124,5 +126,5 @@
 </script>
 <style>
     @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
-    /* @import url('https://code.getmdl.io/1.2.1/material.blue-red.min.css'); */
+    /* @import url('https://code.getmdl.io/1.2.1/material.blue-red.min.css'); */    
 </style>
