@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Vuefire from 'vuefire'
+import VueFire from 'vuefire'
 import firebase from '../service/firebase'
 
 import SigninView from '@/components/SigninView'
@@ -9,8 +9,9 @@ import ResetPasswordView from '@/components/ResetPasswordView'
 import HomeView from '@/components/HomeView'
 import DetailView from '@/components/DetailView'
 import PostView from '@/components/PostView'
+import crudtest from '@/components/crudtest'
 
-Vue.use(Router, Vuefire)
+Vue.use(Router, VueFire)
 
 const router = new Router({
     mode: 'history',
@@ -54,6 +55,14 @@ const router = new Router({
             path: '/post',
             name: 'post',
             component: PostView,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/crudtest',
+            name: 'crudtest',
+            component: crudtest,
             meta: {
                 requiresAuth: true
             }

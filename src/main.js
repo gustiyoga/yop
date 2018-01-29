@@ -10,9 +10,14 @@ Vue.config.productionTip = false
 const unsubscribe = firebase.auth.onAuthStateChanged(() => {
     const app = new Vue({
       el: '#app',
-      firebase: {
-          cat: firebase.database.ref('cat').orderByChild('created_at')
-      },
+      // firebase: {
+      //   boards: {
+      //     source: firebase.database.ref('boards'),
+      //       cancelCallback (err) {
+      //           console.error(err)
+      //       }
+      //   }
+      // },
       router,
       template: '<App/>',
       components: { App }

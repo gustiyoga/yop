@@ -53,7 +53,6 @@
 <script>
     import _ from 'lodash'
     import data from '../data'
-    import M from './../../static/js/materialize.min.js'
     export default {
         data: function () {
             return {

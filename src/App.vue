@@ -33,7 +33,7 @@
 
                         <!-- show on mobile -->
                         <div v-if="isSession()" class="right nav__icon-right">
-                            <router-link :to="{path: '/post'}">
+                            <router-link :to="{path: '/notification'}">
                                 <i class="material-icons">notifications_none</i>
                             </router-link>
                         </div>
@@ -72,7 +72,7 @@
         </main>
         <footer v-if="isSession()" class="footer-nav hide-on-large-only white">
             <footer-nav icon="home" link="/home"></footer-nav>
-            <footer-nav icon="assignment" link="/post"></footer-nav>
+            <footer-nav icon="assignment" link="/crudtest"></footer-nav>
             <footer-nav icon="people" link="/people"></footer-nav>
         </footer>
     </div>

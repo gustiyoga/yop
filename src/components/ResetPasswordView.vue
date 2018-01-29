@@ -36,7 +36,6 @@
 </template>
 <script>
     import firebase from '../service/firebase'
-    import M from './../../static/js/materialize.min.js'
     export default {
         name: 'resetPassword',
         data: function () {
