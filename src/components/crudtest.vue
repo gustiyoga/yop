@@ -24,7 +24,8 @@
             </div>
         </div>
         <div class="row">
-            <div class="col s12" v-for="board in boards" :key="board.id">
+            <div class="col s12" v-for="(board, index) in boards" :key="index">
+                {{ index }} <br/>
                 {{ board.name }}
             </div>
         </div>
@@ -34,15 +35,12 @@
     import database from './../service/database'
     import firebase from './../service/firebase'
     import _ from 'lodash'
-
+    
+    var asd = []
     export default {
         data: function () {
             return {
-                'title': '',
-                'boards': {
-                    '1': 'asd',
-                    '2': 'def'
-                }
+                'title': ''
             }
         },
         methods: {
@@ -53,13 +51,16 @@
                 })
             },
             doPost: function () {
-                console.log('asd')
-                // this.showToast(this.boards)
+                console.log(this.boards)
             }
         },
         mounted: function () {
             // this.data = this.boardsData()
-            // let boardsData = this.$firebaseRefs.boards.get()
+        },
+        computed: {
+            boards () {
+                return this.$store.getters.getBoards
+            }
         }
     }
 </script>

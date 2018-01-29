@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import { store } from './store'
 import firebase from './service/firebase'
 
 Vue.config.productionTip = false
@@ -10,17 +11,11 @@ Vue.config.productionTip = false
 const unsubscribe = firebase.auth.onAuthStateChanged(() => {
     const app = new Vue({
       el: '#app',
-      // firebase: {
-      //   boards: {
-      //     source: firebase.database.ref('boards'),
-      //       cancelCallback (err) {
-      //           console.error(err)
-      //       }
-      //   }
-      // },
+      store,
       router,
       template: '<App/>',
-      components: { App }
+      components: { App },
+      render: h => h(App)
     })
 
     unsubscribe()
