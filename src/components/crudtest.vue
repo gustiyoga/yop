@@ -54,9 +54,6 @@
                 console.log(this.boards)
             }
         },
-        mounted: function () {
-            // this.data = this.boardsData()
-        },
         computed: {
             boards () {
                 return this.$store.getters.getBoards
