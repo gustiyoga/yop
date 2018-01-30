@@ -10,17 +10,17 @@
                 <nav class="cyan">
                     <div class="nav-wrapper">
                         <router-link :to="{path: '/'}" class="brand-logo center">Yop</router-link>
-                        <!-- <ul v-if="isSession()" class="left hide-on-med-and-down">
+                        <!-- <ul v-if="isLoggedIn" class="left hide-on-med-and-down">
                             <li><router-link :to="{path: '/home'}">Home</router-link></li>
                         </ul> -->
 
                         <!-- show on mobile -->
-                        <a v-if="isSession()" href="javascript:;" data-target="mobile-drawer" class="sidenav-trigger">
+                        <a v-if="isLoggedIn" href="javascript:;" data-target="mobile-drawer" class="sidenav-trigger">
                             <i class="material-icons">menu</i>
                         </a>
 
                         <!-- show on desktop -->
-                        <ul v-if="isSession()" class="right hide-on-med-and-down">
+                        <ul v-if="isLoggedIn" class="right hide-on-med-and-down">
                             <!-- <li><router-link :to="{path: '/home'}">Home</router-link></li> -->
                             <!-- <li><router-link :to="{path: '/post'}">Post a Picture</router-link></li> -->
                             <li>
@@ -32,12 +32,12 @@
                         </ul>
 
                         <!-- show on mobile -->
-                        <div v-if="isSession()" class="right nav__icon-right">
+                        <div v-if="isLoggedIn" class="right nav__icon-right">
                             <router-link :to="{path: '/notification'}">
                                 <i class="material-icons">notifications_none</i>
                             </router-link>
                         </div>
-                        <div v-if="isSession()" class="right nav__icon-right">
+                        <div v-if="isLoggedIn" class="right nav__icon-right">
                             <router-link :to="{path: '/search'}">
                                 <i class="material-icons">search</i>
                             </router-link>
@@ -46,7 +46,7 @@
                 </nav>
             </div>
             <!-- drawer on mobile -->
-            <ul class="sidenav" id="mobile-drawer" v-if="isSession()">
+            <ul class="sidenav" id="mobile-drawer" v-if="isLoggedIn">
                 <div class="sidenav-profil">
                     <img class="circle image--object-fit" src="./assets/images/profil.jpg" alt="">
                     <div class="grey-text text-lighten-4">
@@ -67,10 +67,10 @@
                 <transition name="fade">
                     <router-view></router-view>
                 </transition>
-                <div v-if="isSession()" class="footer-nav--stabilizer hide-on-large-only"></div>
+                <div v-if="isLoggedIn" class="footer-nav--stabilizer hide-on-large-only"></div>
             </div>
         </main>
-        <footer v-if="isSession()" class="footer-nav hide-on-large-only white">
+        <footer v-if="isLoggedIn" class="footer-nav hide-on-large-only white">
             <footer-nav icon="home" link="/home"></footer-nav>
             <footer-nav icon="assignment" link="/crudtest"></footer-nav>
             <footer-nav icon="people" link="/people"></footer-nav>
@@ -89,12 +89,20 @@
         components: {
             'footerNav': footerNavItem
         },
+        data: function () {
+            return {
+                isLoggedIn: firebase.auth.currentUser
+            }
+        },
         methods: {
-            isSession: function () {
-                return firebase.auth.currentUser
+            loggedInCheck: function () {
+                // this.isLoggedIn = this.$store.getters.isLoggedIn || this.isLoggedIn
+                // console.log(this.isLoggedIn)
+                // console.log(this.$store.getters.isLoggedIn)
+                this.isLoggedIn = firebase.auth.currentUser
             },
             initMaterialize: function () {
-                if (this.isSession()) {
+                if (this.isLoggedIn) {
                     // drawer action
                     let sideNav = document.querySelector('.sidenav')
                     let sideNavInstance = new M.Sidenav(sideNav)
@@ -112,16 +120,24 @@
                         html: 'You are signed out!',
                         displayLength: 5000
                     })
+                    // this.$store.dispatch('toggleIsLoggedIn', false)
                     this.$router.push('/')
                 })
             }
         },
         mounted: function () {
+            this.loggedInCheck()
             this.initMaterialize()
         },
         updated: function () {
+            this.loggedInCheck()
             this.initMaterialize()
         }
+        // computed: {
+        //     isLoggedIn () {
+        //         return this.$store.getters.isLoggedIn
+        //     }
+        // }
     }
 </script>
 <style>

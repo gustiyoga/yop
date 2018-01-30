@@ -8,7 +8,8 @@ Vue.use(Vuex, Vuefire)
 let boardsRef = firebase.database.ref('boards')
 export const store = new Vuex.Store({
     state: {
-        boardsData: [],
+        boardsData: null,
+        // isLoggedIn: null,
         loadedBoards: [
             {
                 'id': 0,
@@ -41,15 +42,38 @@ export const store = new Vuex.Store({
                 'comment': 'Aplikasi Kebanyakan Revisi',
                 'info': 'Posted by Richard on Monday'
             }
-        ],
-        users: {
-            id: '1',
-            registeredBoards: ['12']
+        ]
+    },
+    mutations: {
+        // TOGGLE_ISLOGGEDIN: (state, payload) => {
+        //     state.isLoggedIn = payload
+        // }
+        SET_BOARDS_DATA: (state, payload) => {
+            state.boardsData = payload
         }
     },
-    mutations: {},
-    actions: {},
+    actions: {
+        // toggleIsLoggedIn: (context, payload) => {
+        //     context.commit('TOGGLE_ISLOGGEDIN', payload)
+        // }
+        syncBoards: (context) => {
+            boardsRef.on('value', function (snapshot) {
+                context.commit('SET_BOARDS_DATA', snapshot.val())
+            }, function (errorObject) {
+                console.log('The read failed: ' + errorObject.code)
+            })
+        },
+        stopSyncBoards: (context) => {
+            boardsRef.off()
+        },
+        addBoard: (context, payload) => {
+            boardsRef.push({
+                name: payload.title
+            })
+        }
+    },
     getters: {
+        // isLoggedIn: state => state.isLoggedIn,
         loadedBoards (state) {
             return state.loadedBoards.sort((boardA, boardB) => {
                 return boardA.id > boardB.id
@@ -62,13 +86,13 @@ export const store = new Vuex.Store({
                 })
             }
         },
-        getBoards (state) {
-            boardsRef.on('value', function (snapshot) {
-                // state.boardsData.data = snapshot.val()
-                state.boardsData = snapshot.val()
-            }, function (errorObject) {
-                console.log('The read failed: ' + errorObject.code)
-            })
+        getBoards: state => {
+            // boardsRef.on('value', function (snapshot) {
+            //     state.boardsData = snapshot.val()
+            //     console.log('loaded')
+            // }, function (errorObject) {
+            //     console.log('The read failed: ' + errorObject.code)
+            // })
             return state.boardsData
         }
     }

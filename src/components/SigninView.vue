@@ -81,6 +81,7 @@
                                 firebase.auth.signOut().then(() => {})
                             } else {
                                 this.showToast('Well done! You are now connected!')
+                                // this.$store.dispatch('toggleIsLoggedIn', true)
                                 this.$router.push('/home')
                             }
                             this.toggleLoadingBar(false)
