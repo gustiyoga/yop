@@ -81,6 +81,11 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
     let currentUser = firebase.auth.currentUser
     let requiresAuth = to.matched.some(record => record.meta.requiresAuth)
+    // if (from.name === 'home') {
+    //     console.log('go')
+    //     router.go(100)
+    // }
+    // console.log(History.length)
 
     // if not signin
     if (requiresAuth && !currentUser) {

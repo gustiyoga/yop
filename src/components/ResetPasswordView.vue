@@ -37,7 +37,7 @@
 <script>
     import firebase from '../service/firebase'
     export default {
-        name: 'resetPassword',
+        name: 'ResetPassword',
         data: function () {
             return {
                 email: ''

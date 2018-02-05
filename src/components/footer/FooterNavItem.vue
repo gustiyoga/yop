@@ -9,7 +9,10 @@
 </template>
 <script>
     export default {
-        name: 'footerMenuItem',
-        props: ['link', 'icon']
+        name: 'FooterMenuItem',
+        props: {
+            link: String,
+            icon: String
+        }
     }
 </script>

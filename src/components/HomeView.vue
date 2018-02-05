@@ -54,6 +54,7 @@
     import _ from 'lodash'
     import data from '../data'
     export default {
+        name: 'Home',
         data: function () {
             return {
                 pictures: data.pictures
@@ -77,13 +78,13 @@
             // }
         },
         mounted: function () {
-            // dropdown card menu
-            let cardDropdownMenu = document.querySelectorAll('.card__dropdown-trigger')
-            _.forEach(cardDropdownMenu, function (value) {
-                let cardDropdownMenuInstance = new M.Dropdown(value, {
-                    constrainWidth: false
-                })
-            })
+            // // dropdown card menu
+            // let cardDropdownMenu = document.querySelectorAll('.card__dropdown-trigger')
+            // _.forEach(cardDropdownMenu, function (value) {
+            //     let cardDropdownMenuInstance = new M.Dropdown(value, {
+            //         constrainWidth: false
+            //     })
+            // })
         }
     }
 </script>

@@ -83,7 +83,7 @@
     import './assets/materialize/materialize.scss'
     import './assets/styles/yop.scss'
     import M from './../static/js/materialize.min.js'
-    import footerNavItem from './components/microComponents/FooterNavItem.vue'
+    import footerNavItem from './components/footer/FooterNavItem.vue'
     export default {
         name: 'app',
         components: {
@@ -121,6 +121,7 @@
                         displayLength: 5000
                     })
                     // this.$store.dispatch('toggleIsLoggedIn', false)
+                    this.$store.dispatch('test/clearBoards')
                     this.$router.push('/')
                 })
             }

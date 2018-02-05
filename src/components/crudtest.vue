@@ -12,7 +12,7 @@
                         <form action="javascript:;">
                             <div class="input-field">
                                 <i class="material-icons prefix">mail_outline</i>
-                                <input id="title" type="text" class="validate" v-model="title">
+                                <input id="title" type="text" v-model="title">
                                 <label for="title">Judul</label>
                             </div>
                             <button type="submit" class="btn waves-effect waves-light orange darken-1 btn-action" @click="doPost">
@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="row">
-            <center v-if="!boards">
+            <center v-if="this.isLoading">
                 <h2>No Data</h2>
             </center>
             <div class="col s12" v-for="(board, index) in boards" :key="index" @click="doDelete(index)">
@@ -37,6 +37,7 @@
 <script>
     import _ from 'lodash'
     import firebase from './../service/firebase'
+    import { mapGetters } from 'vuex'
     export default {
         data: function () {
             return {
@@ -51,7 +52,7 @@
                 })
             },
             doPost: function () {
-                this.$store.dispatch('addBoard', {title: this.title})
+                this.$store.dispatch('test/addBoard', {title: this.title})
             },
             doUpdate: function () {
                 firebase.database.ref('boards').update({
@@ -65,15 +66,16 @@
             }
         },
         mounted: function () {
-            this.$store.dispatch('syncBoards')
+            this.$store.dispatch('test/syncBoards')
         },
         beforeDestroy: function () {
-            this.$store.dispatch('stopSyncBoards')
+            this.$store.dispatch('test/stopSyncBoards')
         },
         computed: {
-            boards () {
-                return this.$store.getters.getBoards
-            }
+            ...mapGetters({
+               boards: 'test/getBoards',
+               isLoading: 'test/isLoading'
+            })
         }
     }
 </script>

@@ -49,7 +49,7 @@
 <script>
     import firebase from '../service/firebase'
     export default {
-        name: 'signin',
+        name: 'SignIn',
         data: function () {
             return {
                 email: '',
